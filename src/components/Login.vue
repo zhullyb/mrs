@@ -13,20 +13,10 @@ const serviceInfo = reactive({
   email: ''
 })
 
-const confirmLoading = ref(false);
 const newUserStore = userStore()
 
 const userLoggedIn = () => {
   return newUserStore.userSession.level !== -1
-}
-
-const submitHandler = async () => {
-  if (isLogin.value === 'login') {
-    login()
-  } else {
-    register()
-  }
-  confirmLoading.value = false;
 }
 
 const login = async () => {
@@ -34,7 +24,10 @@ const login = async () => {
     message.error('用户名或密码不能为空')
     return
   }
-  const res = await userService.login(serviceInfo)
+  const res = await userService.login({
+    username: serviceInfo.username,
+    password: serviceInfo.password
+  })
   if (res.data.code === 200) {
     message.success('登录成功')
     dialogVisible.value = false
@@ -58,7 +51,11 @@ const register = async () => {
     return
   }
 
-  const res = await userService.register(serviceInfo)
+  const res = await userService.register({
+    username: serviceInfo.username,
+    password: serviceInfo.password,
+    email: serviceInfo.email
+  })
   if (res.data.code === 200) {
     newUserStore.setUserInfo({
       uid: res.data.data.uid,
@@ -79,38 +76,113 @@ const register = async () => {
   <a-button v-show="!userLoggedIn" type="primary" @click="newUserStore.clearUserInfo">退出登录</a-button>
   <a-modal
     v-model:open="dialogVisible"
-    width="30%"
-    @ok="submitHandler"
-    :confirm-loading="confirmLoading"
-    cancel-text="取消"
-    ok-text="确认"
+    centered
+    :footer="null"
+    width="400px"
+    :title="isLogin === 'login' ? '登录' : '注册'"
   >
-    <div>
-      <a-radio-group v-model:value="isLogin" button-style="solid">
-        <a-radio-button value='login'>登录</a-radio-button>
-        <a-radio-button value='register'>注册</a-radio-button>
-      </a-radio-group>
-    </div>
-    <div style="height: 20px;"></div>
-    <div v-if="isLogin === 'login'">
-      <a-space direction="vertical">
-        <a-input v-model:value="serviceInfo.username" placeholder="用户名"></a-input>
-        <a-input-password v-model:value="serviceInfo.password" placeholder="密码"></a-input-password>
-      </a-space>
-    </div>
-    <div v-else-if="isLogin === 'register'">
-      <a-space direction="vertical">
-        <a-input v-model:value="serviceInfo.username" placeholder="用户名"></a-input>
-        <a-input v-model:value="serviceInfo.email" placeholder="邮箱"></a-input>
-        <a-input-password v-model:value="serviceInfo.password" placeholder="密码"></a-input-password>
-        <a-input-password v-model:value="serviceInfo.passwordConfirm" placeholder="确认密码"></a-input-password>
-      </a-space>
-    </div>
+    <a-form
+      :model="serviceInfo"
+      name="login"
+      class="login-form"
+      :label-col="{ span: 6 }"
+      v-if="isLogin === 'login'"
+    >
+      <a-form-item
+        label="用户名"
+        name="username"
+        :rules="[{ required: true, message: '请输入用户名', min: 3, max: 20 }]"
+      >
+        <a-input v-model:value="serviceInfo.username" placeholder="用户名">
+        </a-input>
+      </a-form-item>
+      <a-form-item
+        label="密码"
+        name="password"
+        :rules="[{ required: true, message: '请输入密码', min: 6, max: 20 }]"
+      >
+        <a-input-password v-model:value="serviceInfo.password" placeholder="密码">
+        </a-input-password>
+      </a-form-item>
+      <a-form-item>
+        <a-button
+          :disabled="!serviceInfo.username || !serviceInfo.password"
+          type="primary"
+          @click="login"
+          class="login-form-button"
+        >
+          登录
+        </a-button>
+        Or
+        <a @click="isLogin='register'">注册</a>
+      </a-form-item>
+    </a-form>
+    <a-form
+      :model="serviceInfo"
+      name="register"
+      class="login-form"
+      :label-col="{ span: 6 }"
+      v-else-if="isLogin === 'register'"
+    >
+      <a-form-item
+        label="用户名"
+        name="username"
+        :rules="[{ required: true, message: '请输入用户名', min: 3, max: 20 }]"
+      >
+        <a-input v-model:value="serviceInfo.username" placeholder="用户名">
+        </a-input>
+      </a-form-item>
+      <a-form-item
+        label="邮箱"
+        name="email"
+        :rules="[{ required: true, message: '请输入邮箱', min: 3}]"
+      >
+
+        <a-input v-model:value="serviceInfo.email" placeholder="邮箱">
+        </a-input>
+      </a-form-item>
+      <a-form-item
+        label="密码"
+        name="password"
+        :rules="[{ required: true, message: '请输入密码', min: 6, max: 20 }]"
+      >
+        <a-input-password v-model:value="serviceInfo.password" placeholder="密码">
+        </a-input-password>
+      </a-form-item>
+      <a-form-item
+        label="确认密码"
+        name="passwordConfirm"
+        :rules="[{ required: true, message: '请确认密码', min: 6, max: 20 }]"
+      >
+        <a-input-password v-model:value="serviceInfo.passwordConfirm" placeholder="确认密码">
+        </a-input-password>
+      </a-form-item>
+      <a-form-item>
+        <a-button
+          :disabled="!serviceInfo.username || !serviceInfo.password || !serviceInfo.email || !serviceInfo.passwordConfirm"
+          type="primary"
+          @click="register"
+          class="login-form-button"
+        >
+          注册
+        </a-button>
+        Or
+        <a @click="isLogin='login'">登录</a>
+      </a-form-item>
+    </a-form>
   </a-modal>
 </template>
 
 <style scoped>
-.a-modal {
-  text-align: center;
+.login-form {
+  max-width: 300px;
+}
+
+.register-form {
+  max-width: 300px;
+}
+
+.login-form-button {
+  width: 100%;
 }
 </style>
