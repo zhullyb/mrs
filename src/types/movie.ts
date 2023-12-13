@@ -13,3 +13,11 @@ export interface movieInfo {
     length?: string;
     description: string;
 }
+
+export interface movieListItem {
+    name: string;
+    rate: number;
+    description: string;
+    image: string;
+    mid: string;
+}

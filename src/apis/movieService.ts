@@ -8,4 +8,13 @@ export default class movieService {
             params: { mid }
         })
     }
+
+    static async getMovieList(keyword: string) {
+        return await request({
+            url: "/api/v1/movie/search",
+            method: "GET",
+            params: { keyword }
+        })
+    }
+
 }
