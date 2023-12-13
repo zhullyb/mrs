@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import Comments from './components/Comments.vue';
+import { RouterView } from 'vue-router';
+import MyHeader from './components/MyHeader.vue';
 </script>
 
 <template>
-    <Comments />
+<MyHeader/>
+<RouterView/>
 </template>
