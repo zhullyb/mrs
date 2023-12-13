@@ -16,12 +16,12 @@ onMounted( async () => {
 
 <template>
     <div>
-        <h1>标题</h1>
+        <h2>标题</h2>
         <a-list item-layout="vertical" :dataSource="result">
             <template #renderItem="{ item }">
                 <div>
                     <a-list-item style="display: inline-flex;">
-                        <a :href="item.url">
+                        <a :href="`/movie/${item.mid}`">
                             <a-image
                                 :src="item.image"
                                 :width="100"
@@ -29,7 +29,7 @@ onMounted( async () => {
                             />
                         </a>
                         <div class="item-content">
-                            <a :href="item.url">
+                            <a :href="`/movie/${item.mid}`">
                                 <h3>{{ item.name }}</h3>
                             </a>
                             <a-rate :value="item.rate/2" disabled allow-half />

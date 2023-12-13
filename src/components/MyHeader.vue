@@ -4,7 +4,7 @@ import SearchBar from '../components/SearchBar.vue'
 </script>
 
 <template>
-    <div class="root">
+    <div class="header-root">
         <div class="main-header">
             <h1 class="title">竹林影评</h1>
             <div style="display: flex;">
@@ -16,7 +16,7 @@ import SearchBar from '../components/SearchBar.vue'
 </template>
 
 <style scoped>
-.root {
+.header-root {
     width: 100%;
     border: 1px solid #e8e8e8;
     margin-bottom: 1rem;
