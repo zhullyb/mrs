@@ -19,6 +19,7 @@ import SearchBar from '../components/SearchBar.vue'
 .root {
     width: 100%;
     border: 1px solid #e8e8e8;
+    margin-bottom: 1rem;
 }
 
 .main-header {
