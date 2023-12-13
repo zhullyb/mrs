@@ -39,6 +39,7 @@ onMounted(async () => {
                 <h2>剧情简介</h2>
                 <p v-show="data?.description" class="description">{{ data?.description }}</p>
             </a-col>
+            <a-divider />
         </a-row>
     </div>
 </template>
