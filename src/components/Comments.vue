@@ -4,62 +4,65 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/zh-cn';
 dayjs.extend(relativeTime);
 import CryptoJS from 'crypto-js';
-
-import { ref } from 'vue';
+import { commentListItem } from '../types/comment';
+import { onMounted, ref } from 'vue';
+import commentService from '../apis/commentService';
 import userStore from '../stores/userStore';
+import { message } from 'ant-design-vue';
 const commentText = ref('');
+const rate = ref(0)
+// TODO: get mid from router
+const mid = ref('1')
 const newUserStore = userStore();
 
 const email2avatar = (email: string) => {
     return `https://cravatar.cn/avatar/${CryptoJS.MD5(email.trim().toLowerCase()).toString()}`;
 };
 
-const handleSubmit = () => {
-    console.log(data)
+const handleSubmit = async () => {
     if (commentText.value.trim() === '') {
+        message.warning('评论不能为空');
         return;
     }
-    data.value.unshift({
-        author: newUserStore.userSession.username,
-        avatar: email2avatar(newUserStore.userSession.email),
+    const res = await commentService.addComment({
+        mid: mid.value,
         content: commentText.value,
-        datetime: Math.floor(Date.now() / 1000).toString(),
+        uid: newUserStore.userSession.uid,
+        rate: rate.value * 2,
     });
-    commentText.value = '';
-    console.log(data)
+    if (res.data.code === 200) {
+        commentText.value = '';
+        getCommentList();
+    } else {
+        message.error(res.data.msg || '评论失败');
+    }
 };
 
-const data = ref([
-    {
-        author: 'zhullyb',
-        avatar: 'https://bu.dusays.com/2022/03/20/d9af04eba27b5.png',
-        content:
-            '如你所见，这是一条测试数据',
-        datetime: '1702456165',
-    },
-    {
-        author: 'zhullyb',
-        avatar: 'https://bu.dusays.com/2022/03/20/d9af04eba27b5.png',
-        content:
-            '不用说你也知道，这是另一条测试数据',
-        datetime: '1702456165',
-    },
-]);
+const data = ref<Array<commentListItem>>([]);
+const getCommentList = async () => {
+    const res = await commentService.getCommentList(mid.value);
+    data.value = res.data.data;
+};
+
+onMounted(async () => {
+    getCommentList();
+});
 </script>
 
 <template>
     <div class="root">
         <a-comment>
             <template #avatar>
-                <a-avatar :src="email2avatar(newUserStore.userSession.email)" alt="Han Solo" />
+                <a-avatar :src="email2avatar(newUserStore.userSession.email)" :alt="newUserStore.userSession.username" />
             </template>
             <template #content>
                 <a-form-item>
-                    <a-textarea v-model:value="commentText" :rows="4" />
+                    <a-textarea v-model:value="commentText" :rows="3" placeholder="速速交出你的评论！" />
                 </a-form-item>
-                <a-form-item>
-                    <a-button type="primary" @click="handleSubmit">
-                        Add Comment
+                <a-form-item style="display: flex;">
+                    <a-rate v-model:value="rate" />
+                    <a-button type="primary" @click="handleSubmit" style="float: right;">
+                        发布
                     </a-button>
                 </a-form-item>
             </template>
@@ -77,6 +80,7 @@ const data = ref([
                             <a-tooltip :title="dayjs.unix(item.datetime).format('YYYY-MM-DD HH:mm:ss')">
                                 <span>{{ dayjs.unix(item.datetime).locale('zh-cn').fromNow() }}</span>
                             </a-tooltip>
+                            <a-rate :value="item.rate/2" disabled allow-half />
                         </template>
                     </a-comment>
                 </a-list-item>
