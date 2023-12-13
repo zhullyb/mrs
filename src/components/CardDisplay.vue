@@ -14,7 +14,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <a-row>
+    <a-row class="root">
         <a-col :span="6" v-for="item in data">
             <a-card hoverable class="card" @click="openUrl(item.mid)">
                 <template #cover>
@@ -22,7 +22,7 @@ onMounted(async () => {
                 </template>
                 <a-card-meta :title="item.name">
                     <template #description>
-                        <a-rate :value="item.rate/2" disabled allow-half />
+                        <a-rate :value="item.rate/2" disabled allow-half class="rate-class" />
                         <span class="rate-num">{{ item.rate }}</span>
                     </template>
                 </a-card-meta>
@@ -33,7 +33,7 @@ onMounted(async () => {
 
 <style scoped>
 .card {
-    margin: 20px;
+    margin: 10px;
 }
 
 .cover-image {
@@ -41,9 +41,18 @@ onMounted(async () => {
     object-fit: cover;
 }
 
+.rate-class {
+    font-size: 0.9rem;
+}
+
 .rate-num {
     margin-left: 10px;
-    font-size: 20px;
+    font-size: 18px;
     color: #fae314;
+}
+
+.root {
+    margin: 0 auto;
+    max-width: 55rem;
 }
 </style>
