@@ -5,14 +5,13 @@ import 'dayjs/locale/zh-cn';
 dayjs.extend(relativeTime);
 import CryptoJS from 'crypto-js';
 import { commentListItem } from '../types/comment';
-import { onMounted, ref } from 'vue';
+import { getCurrentInstance, onMounted, ref } from 'vue';
 import commentService from '../apis/commentService';
 import userStore from '../stores/userStore';
 import { message } from 'ant-design-vue';
 const commentText = ref('');
-const rate = ref(0)
-// TODO: get mid from router
-const mid = ref('1')
+const rate = ref(0);
+const mid = getCurrentInstance()?.proxy?.$route.params.mid as string;
 const newUserStore = userStore();
 
 const email2avatar = (email: string) => {
@@ -29,7 +28,7 @@ const handleSubmit = async () => {
         return;
     }
     const res = await commentService.addComment({
-        mid: mid.value,
+        mid: mid,
         content: commentText.value,
         uid: newUserStore.userSession.uid,
         rate: rate.value * 2,
@@ -45,7 +44,7 @@ const handleSubmit = async () => {
 
 const data = ref<Array<commentListItem>>([]);
 const getCommentList = async () => {
-    const res = await commentService.getCommentList(mid.value);
+    const res = await commentService.getCommentList(mid);
     data.value = res.data.data;
 };
 
