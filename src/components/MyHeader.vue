@@ -6,7 +6,9 @@ import SearchBar from '../components/SearchBar.vue'
 <template>
     <div class="header-root">
         <div class="main-header">
-            <h1 class="title">竹林影评</h1>
+            <a href="/" style="text-decoration: none;">
+                <h1 class="title">竹林影评</h1>
+            </a>
             <div style="display: flex;">
                 <SearchBar style="margin: auto;"/>
                 <Login style="margin: auto;"/>
