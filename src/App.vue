@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Search from './components/Search.vue'
+import Comments from './components/Comments.vue';
 </script>
 
 <template>
-    <Search />
+    <Comments />
 </template>
