@@ -24,14 +24,19 @@ const handleSubmit = async () => {
         message.warning('评论不能为空');
         return;
     }
+    if (rate.value === 0) {
+        message.warning('请给电影评分');
+        return;
+    }
     const res = await commentService.addComment({
         mid: mid.value,
         content: commentText.value,
         uid: newUserStore.userSession.uid,
         rate: rate.value * 2,
     });
-    if (res.data.code === 200) {
+    if (res.data.code == 200) {
         commentText.value = '';
+        rate.value = 0;
         getCommentList();
     } else {
         message.error(res.data.msg || '评论失败');
