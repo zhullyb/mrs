@@ -8,7 +8,7 @@ const keyword = '名侦探柯南'
 const result = ref<Array<movieListItem>>([]);
 
 onMounted( async () => {
-    const res = await movieService.getMovieList(keyword);
+    const res = await movieService.SearchMovie(keyword);
     result.value = res.data.data;
 });
 

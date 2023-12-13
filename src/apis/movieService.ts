@@ -9,7 +9,7 @@ export default class movieService {
         })
     }
 
-    static async getMovieList(keyword: string) {
+    static async SearchMovie(keyword: string) {
         return await request({
             url: "/api/v1/movie/search",
             method: "GET",
@@ -17,4 +17,10 @@ export default class movieService {
         })
     }
 
+    static async getMovieList() {
+        return await request({
+            url: "/api/v1/movie/display",
+            method: "GET",
+        })
+    }
 }

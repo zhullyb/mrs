@@ -17,7 +17,7 @@ export interface movieInfo {
 export interface movieListItem {
     name: string;
     rate: number;
-    description: string;
+    description?: string;
     image: string;
     mid: string;
 }
