@@ -11,6 +11,9 @@ dependencies:
   axios:
     specifier: ^1.6.2
     version: 1.6.2
+  crypto-js:
+    specifier: ^4.2.0
+    version: 4.2.0
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
@@ -28,6 +31,9 @@ dependencies:
     version: 4.2.5(vue@3.3.11)
 
 devDependencies:
+  '@types/crypto-js':
+    specifier: ^4.2.1
+    version: 4.2.1
   '@vitejs/plugin-vue':
     specifier: ^4.5.0
     version: 4.5.2(vite@5.0.6)(vue@3.3.11)
@@ -418,6 +424,10 @@ packages:
       nanopop: 2.3.0
     dev: false
 
+  /@types/crypto-js@4.2.1:
+    resolution: {integrity: sha512-FSPGd9+OcSok3RsM0UZ/9fcvMOXJ1ENE/ZbLfOPlBWj7BgXtEAM8VYfTtT760GiLbQIMoVozwVuisjvsVwqYWw==}
+    dev: true
+
   /@vitejs/plugin-vue@4.5.2(vite@5.0.6)(vue@3.3.11):
     resolution: {integrity: sha512-UGR3DlzLi/SaVBPX0cnSyE37vqxU3O6chn8l0HJNzQzDia6/Au2A4xKv+iIJW8w2daf80G7TYHhi1pAUjdZ0bQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -626,6 +636,10 @@ packages:
   /core-js@3.34.0:
     resolution: {integrity: sha512-aDdvlDder8QmY91H88GzNi9EtQi2TjvQhpCX6B1v/dAZHU1AuLgHvRh54RiOerpEhEW46Tkf+vgAViB/CWC0ag==}
     requiresBuild: true
+    dev: false
+
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
     dev: false
 
   /csstype@3.1.3:
