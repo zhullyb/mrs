@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { getCurrentInstance, onMounted, ref } from 'vue';
 import { movieListItem } from '../types/movie';
 import movieService from '../apis/movieService';
 
-// TODO: get keyword from router
-const keyword = '名侦探柯南'
+const keyword = getCurrentInstance()?.proxy?.$route.query.keyword as string;
 const result = ref<Array<movieListItem>>([]);
 
 onMounted( async () => {
@@ -16,7 +15,7 @@ onMounted( async () => {
 
 <template>
     <div>
-        <h2>标题</h2>
+        <h2>搜到关于 {{ keyword }} 的 {{ result.length }} 条结果</h2>
         <a-list item-layout="vertical" :dataSource="result">
             <template #renderItem="{ item }">
                 <div>
