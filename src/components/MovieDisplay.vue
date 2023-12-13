@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { getCurrentInstance, onMounted, ref } from 'vue';
 import { movieInfo } from '../types/movie';
 import movieService from '../apis/movieService';
-// TODO: get mid from router
-const mid = ref("1")
+const mid = getCurrentInstance()?.proxy?.$route.params.mid as string;
 const data = ref<movieInfo>()
 
 onMounted(async () => {
-    const res = await movieService.getInfo(mid.value)
+    const res = await movieService.getInfo(mid)
     data.value = res.data.data
 })
 
