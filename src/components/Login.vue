@@ -72,8 +72,8 @@ const register = async () => {
 </script>
 
 <template>
-  <a-button v-show="userLoggedIn" type="primary" @click="dialogVisible = true">登录/注册</a-button>
-  <a-button v-show="!userLoggedIn" type="primary" @click="newUserStore.clearUserInfo">退出登录</a-button>
+  <a-button v-show="userLoggedIn" type="primary" @click="dialogVisible = true" class="btn">登录/注册</a-button>
+  <a-button v-show="!userLoggedIn" type="primary" @click="newUserStore.clearUserInfo" class="btn">退出登录</a-button>
   <a-modal
     v-model:open="dialogVisible"
     centered
@@ -184,5 +184,9 @@ const register = async () => {
 
 .login-form-button {
   width: 100%;
+}
+
+.btn {
+  margin: auto 20px;
 }
 </style>

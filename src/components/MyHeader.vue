@@ -1,0 +1,39 @@
+<script setup lang="ts">
+import Login from '../components/Login.vue';
+import SearchBar from '../components/SearchBar.vue'
+</script>
+
+<template>
+    <div class="root">
+        <div class="main-header">
+            <h1 class="title">竹林影评</h1>
+            <div style="display: flex;">
+                <SearchBar style="margin: auto;"/>
+                <Login style="margin: auto;"/>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style scoped>
+.root {
+    width: 100%;
+    border: 1px solid #e8e8e8;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    max-width: 55rem;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgb(82, 81, 81);
+    text-align: center;
+    margin: 10px;
+    padding: 0;
+}
+</style>
