@@ -2,8 +2,12 @@
 import { onMounted, ref } from 'vue';
 import movieService from '../apis/movieService';
 import { movieListItem } from '../types/movie';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const openUrl = (mid: string) => {
-    window.open(`/movie/${mid}`);
+    router.push({
+        path: `/movie/${mid}`,
+    });
 };
 const data = ref<Array<movieListItem>>()
 
