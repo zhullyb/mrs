@@ -2,10 +2,11 @@
 import { getCurrentInstance, onMounted, ref } from 'vue';
 import { movieInfo } from '../types/movie';
 import movieService from '../apis/movieService';
-const mid = getCurrentInstance()?.proxy?.$route.params.mid as string;
+const mid = getCurrentInstance()?.proxy?.$route.params.id as string;
 const data = ref<movieInfo>()
 
 onMounted(async () => {
+    console.log(mid)
     const res = await movieService.getInfo(mid)
     data.value = res.data.data
 })
