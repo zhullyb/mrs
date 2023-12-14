@@ -72,8 +72,8 @@ const register = async () => {
 </script>
 
 <template>
-  <a-button v-show="userLoggedIn" type="primary" @click="dialogVisible = true" class="btn">登录/注册</a-button>
-  <a-button v-show="!userLoggedIn" type="primary" @click="newUserStore.clearUserInfo" class="btn">退出登录</a-button>
+  <a-button v-show="!userLoggedIn()" type="primary" @click="dialogVisible = true" class="btn">登录/注册</a-button>
+  <a-button v-show="userLoggedIn()" type="primary" @click="newUserStore.clearUserInfo" class="btn">退出登录</a-button>
   <a-modal
     v-model:open="dialogVisible"
     centered
