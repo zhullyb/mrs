@@ -7,7 +7,7 @@ const onSearch = () => {
     router.push({
         path: '/search',
         query: {
-            searchContent: searchContent.value
+            keyword: searchContent.value
         }
     })
 }
