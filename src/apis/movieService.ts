@@ -23,4 +23,12 @@ export default class movieService {
             method: "GET",
         })
     }
+
+    static async updateMovie(data: any) {
+        return await request({
+            url: "/api/v1/movie/update",
+            method: "POST",
+            data: data
+        })
+    }
 }
