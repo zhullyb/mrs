@@ -138,7 +138,7 @@ onMounted(async () => {
                             </p>
                         </template>
                         <template #datetime>
-                            <a-rate :value="item.rate/2" disabled allow-half class="rate-class"/>
+                            <a-rate :value="item.rate/2" disabled class="rate-class"/>
                             <a-tooltip :title="dayjs.unix(item.datetime).format('YYYY-MM-DD HH:mm:ss')">
                                 <span>{{ dayjs.unix(item.datetime).locale('zh-cn').fromNow() }}</span>
                             </a-tooltip>
