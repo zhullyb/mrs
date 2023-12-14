@@ -4,8 +4,8 @@ export interface movieInfo {
     image?: string;
     director?: string;
     screenwriter?: string;
-    mainActor?: Array<string>;
-    type?: Array<string>;
+    mainActor?: string;
+    type?: string;
     website?: string;
     country?: string;
     language?: string;

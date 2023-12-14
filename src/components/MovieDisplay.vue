@@ -11,8 +11,8 @@ const data = ref<movieInfo>({
     image: '',
     director: '',
     screenwriter: '',
-    mainActor: [],
-    type: [],
+    mainActor: '',
+    type: '',
     website: '',
     country: '',
     language: '',
@@ -56,8 +56,8 @@ onMounted(async () => {
                 <div v-if="!isEditing">
                     <p v-show="data.director"><span class="role">导演: </span>{{ data.director }}</p>
                     <p v-show="data.screenwriter"><span class="role">编剧: </span>{{ data.screenwriter }}</p>
-                    <p v-show="data.mainActor"><span class="role">主演: </span>{{ data.mainActor?.join(' / ') }}</p>
-                    <p v-show="data.type"><span class="role">类型: </span>{{ data.type?.join(' / ') }}</p>
+                    <p v-show="data.mainActor"><span class="role">主演: </span>{{ data.mainActor }}</p>
+                    <p v-show="data.type"><span class="role">类型: </span>{{ data.type }}</p>
                     <p v-show="data.website"><span class="role">官方网站: </span><a :href="data.website">{{ data.website }}</a></p>
                     <p v-show="data.country"><span class="role">制片国家/地区: </span>{{ data.country }}</p>
                     <p v-show="data.language"><span class="role">语言: </span>{{ data.language }}</p>
