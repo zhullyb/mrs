@@ -58,7 +58,8 @@ onMounted(async () => {
     <div class="root">
         <a-row>
             <a-col :span="18" :offset="1">
-                <h1>{{ data.name }}</h1>
+                <h1 v-show="!isEditing">{{ data.name }}</h1>
+                <a-input v-show="isEditing" v-model:value="data.name" />
             </a-col>
             <a-col :span="5" style="display: flex; justify-content: flex-end; align-items: center;">
                 <a-button v-show="isEditing && newUserStore.userSession.level == 1" type="primary" danger @click="handleDelete">删除</a-button>
