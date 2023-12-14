@@ -4,12 +4,18 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/zh-cn';
 dayjs.extend(relativeTime);
 import CryptoJS from 'crypto-js';
-import { commentListItem } from '../types/comment';
+import { commentListItem, editCommentItem } from '../types/comment';
 import { getCurrentInstance, onMounted, ref } from 'vue';
 import commentService from '../apis/commentService';
 import userStore from '../stores/userStore';
-import { message } from 'ant-design-vue';
+import { Modal, message } from 'ant-design-vue';
 const commentText = ref('');
+const editCommentData = ref<editCommentItem>({
+    cid: '',
+    content: '',
+    rate: 0,
+});
+const editVisible = ref(false);
 const rate = ref(0);
 const mid = getCurrentInstance()?.proxy?.$route.params.mid as string;
 const newUserStore = userStore();
@@ -47,6 +53,57 @@ const getCommentList = async () => {
     const res = await commentService.getCommentList(mid);
     data.value = res.data.data;
 };
+
+const editComment = (item: commentListItem) => {
+    editCommentData.value = {
+        cid: item.cid,
+        content: item.content,
+        rate: item.rate / 2,
+    };
+    editVisible.value = true;
+};
+
+const handleEdit = async () => {
+    if (editCommentData.value.content.trim() === '') {
+        message.warning('评论不能为空');
+        return;
+    }
+    if (editCommentData.value.rate === 0) {
+        message.warning('请给电影评分');
+        return;
+    }
+    const res = await commentService.editComment({
+        cid: editCommentData.value.cid,
+        content: editCommentData.value.content,
+        rate: editCommentData.value.rate * 2,
+    });
+    if (res.data.code == 200) {
+        editVisible.value = false;
+        message.success('编辑成功');
+        getCommentList();
+    } else {
+        message.error(res.data.msg || '编辑失败');
+    }
+};
+
+const deleteComment = (item: commentListItem) => {
+    Modal.confirm({
+        title: '删除评论',
+        content: '确认删除该评论吗？',
+        okText: '确认',
+        cancelText: '取消',
+        centered: true,
+        onOk: async () => {
+            const res = await commentService.deleteComment(item.cid);
+            if (res.data.code == 200) {
+                message.success('删除成功');
+                getCommentList();
+            } else {
+                message.error(res.data.msg || '删除失败');
+            }
+        },
+    });
+}
 
 onMounted(async () => {
     getCommentList();
@@ -86,10 +143,31 @@ onMounted(async () => {
                                 <span>{{ dayjs.unix(item.datetime).locale('zh-cn').fromNow() }}</span>
                             </a-tooltip>
                         </template>
+                        <template #actions>
+                            <span v-show="newUserStore.userSession.uid === item.uid || newUserStore.userSession.level >= 1">
+                                <a @click="editComment(item)">编辑</a>
+                                <a-divider type="vertical" />
+                                <a @click="deleteComment(item)">删除</a>
+                            </span>
+                        </template>
                     </a-comment>
                 </a-list-item>
             </template>
         </a-list>
+        <a-modal
+            v-model:open="editVisible"
+            title="编辑评论"
+            @ok="handleEdit"
+            width="50rem"
+            centered
+        >
+            <a-form-item>
+                <a-textarea v-model:value="editCommentData.content" />
+            </a-form-item>
+            <a-form-item>
+                <a-rate v-model:value="editCommentData.rate" />
+            </a-form-item>
+        </a-modal>
     </div>
 </template>
 

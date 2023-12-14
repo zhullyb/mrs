@@ -7,3 +7,9 @@ export interface commentListItem {
     rate: number;
     content: string;
 }
+
+export interface editCommentItem {
+    cid: string;
+    content: string;
+    rate: number;
+}

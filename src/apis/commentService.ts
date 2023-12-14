@@ -21,4 +21,24 @@ export default class commentService {
             data: data
         })
     }
+
+    static async deleteComment(cid: string) {
+        return await request({
+            url: "/api/v1/comment/del",
+            method: "DELETE",
+            params: { cid }
+        })
+    }
+
+    static async editComment(data: {
+        cid: string;
+        content: string;
+        rate: number;
+    }) {
+        return await request({
+            url: "/api/v1/comment/edit",
+            method: "PUT",
+            data: data
+        })
+    }
 }
