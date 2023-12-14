@@ -5,5 +5,5 @@ import MyHeader from './components/MyHeader.vue';
 
 <template>
 <MyHeader/>
-<RouterView/>
+<RouterView :key="$route.fullPath" />
 </template>
