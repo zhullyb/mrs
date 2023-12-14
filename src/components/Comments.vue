@@ -162,7 +162,7 @@ onMounted(async () => {
             centered
         >
             <a-form-item>
-                <a-textarea v-model:value="editCommentData.content" />
+                <a-textarea v-model:value="editCommentData.content" autoSize />
             </a-form-item>
             <a-form-item>
                 <a-rate v-model:value="editCommentData.rate" />
