@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-const searchContent = ref<String>('')
-const search = () => {
-    console.log(searchContent.value)
+import { useRouter } from 'vue-router';
+const searchContent = ref<string>('')
+const router = useRouter()
+const onSearch = () => {
+    router.push({
+        path: '/search',
+        query: {
+            searchContent: searchContent.value
+        }
+    })
 }
 
 </script>
@@ -13,7 +20,7 @@ const search = () => {
             v-model:value="searchContent"
             placeholder="搜索电影"
             enter-button
-            @search="search"
+            @search="onSearch"
         />
     </div>
 </template>
