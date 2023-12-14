@@ -39,4 +39,12 @@ export default class movieService {
             data: { mid }
         })
     }
+
+    static async addMovie(data: any) {
+        return await request({
+            url: "/api/v1/movie/add",
+            method: "POST",
+            data: data
+        })
+    }
 }

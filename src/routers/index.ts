@@ -15,6 +15,11 @@ const routes = [
         path: '/movie/:id',
         name: 'MovieDetail',
         component: () => import('../pages/MovieInfo.vue'),
+    },
+    {
+        path: '/addMovie',
+        name: 'AddMovie',
+        component: () => import('../pages/AddMovie.vue'),
     }
 ];
 
