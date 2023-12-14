@@ -31,4 +31,12 @@ export default class movieService {
             data: data
         })
     }
+
+    static async deleteMovie(mid: string) {
+        return await request({
+            url: "/api/v1/movie/del",
+            method: "POST",
+            data: { mid }
+        })
+    }
 }

@@ -2,7 +2,12 @@
 import { getCurrentInstance, onMounted, ref } from 'vue';
 import { movieInfo } from '../types/movie';
 import movieService from '../apis/movieService';
+import userStore from '../stores/userStore';
 import { message } from 'ant-design-vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const newUserStore = userStore();
 const mid = getCurrentInstance()?.proxy?.$route.params.id as string;
 const isEditing = ref(false)
 const data = ref<movieInfo>({
@@ -31,6 +36,16 @@ const handleSubmit = async () => {
     }
 }
 
+const handleDelete = async () => {
+    const res = await movieService.deleteMovie(mid)
+    if (res.data.code == 200) {
+        message.success('删除成功')
+        router.push('/')
+    } else {
+        message.error(res.data.msg || '删除失败')
+    }
+}
+
 onMounted(async () => {
     console.log(mid)
     const res = await movieService.getInfo(mid)
@@ -42,10 +57,12 @@ onMounted(async () => {
 <template>
     <div class="root">
         <a-row>
-            <a-col :span="21" :offset="1">
+            <a-col :span="18" :offset="1">
                 <h1>{{ data.name }}</h1>
             </a-col>
-            <a-col :span="1">
+            <a-col :span="5" style="display: flex; justify-content: flex-end; align-items: center;">
+                <a-button v-show="isEditing && newUserStore.userSession.level == 1" type="primary" danger @click="handleDelete">删除</a-button>
+                <span>&nbsp;&nbsp;&nbsp;</span>
                 <a-button type="dashed" @click="isEditing=!isEditing">{{isEditing ? "预览" : "编辑"}}</a-button>
             </a-col>
             <a-divider />
