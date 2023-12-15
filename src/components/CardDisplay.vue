@@ -27,8 +27,8 @@ onMounted(async () => {
 
 <template>
     <a-row class="root">
-        <a-col :span="6">
-            <a-card v-show="newUserStore.userSession.level == 1" class="card" hoverable @click="addMovie">
+        <a-col :span="6"  v-show="newUserStore.userSession.level == 1">
+            <a-card class="card" hoverable @click="addMovie">
                 <template #cover>
                     <img src="/addMovie.jpg" alt="添加电影" class="cover-image">
                 </template>
