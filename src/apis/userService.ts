@@ -23,4 +23,11 @@ export default class userService {
             data: data
         })
     }
+
+    static async getUsers() {
+        return await request({
+            url: "/api/v1/user/getUsers",
+            method: "GET",
+        })
+    }
 }
