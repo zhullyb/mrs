@@ -30,4 +30,12 @@ export default class userService {
             method: "GET",
         })
     }
+
+    static async deleteUser(uid: string) {
+        return await request({
+            url: "/api/v1/user/deleteUser",
+            method: "POST",
+            data: { uid }
+        })
+    }
 }
