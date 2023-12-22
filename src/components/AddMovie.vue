@@ -4,6 +4,8 @@ import { movieInfo } from '../types/movie';
 import movieService from '../apis/movieService';
 import { UploadChangeParam, UploadProps, message } from 'ant-design-vue';
 import router from '../routers';
+import userStore from '../stores/userStore';
+const newUserStore = userStore();
 const isEditing = ref(true);
 const fileList = ref([]);
 const data = ref<movieInfo>({
@@ -28,6 +30,9 @@ const handleSubmit = async () => {
         isEditing.value = false
         router.push(`/movie/${res.data.data.mid}`);
         message.success('添加成功')
+    } else if (res.data.code == 401) {
+        message.warning('登陆过期，请重新登陆')
+        newUserStore.clearUserInfo()
     } else {
         message.error(res.data.msg || '添加失败')
     }

@@ -3,6 +3,8 @@ import { onMounted, ref } from 'vue';
 import userService from '../apis/userService';
 import { message } from 'ant-design-vue';
 import modal from 'ant-design-vue/es/modal';
+import userStore from '../stores/userStore';
+const newUserStore = userStore();
 const userList = ref([]);
 
 const columns = [
@@ -38,8 +40,10 @@ const showDeleteConfirm = async (record: any) => {
             if (res.data.code == 200) {
                 message.success('删除成功');
                 userList.value = userList.value.filter((item: any) => item.uid != record.uid);
-            }
-            else {
+            } else if (res.data.code == 401) {
+                message.warning('登陆过期，请重新登陆');
+                newUserStore.clearUserInfo();
+            } else {
                 message.error(res.data.msg || '删除失败');
             }
         }
@@ -50,6 +54,9 @@ onMounted(async () => {
     const res = await userService.getUsers();
     if (res.data.code == 200) {
         userList.value = res.data.data;
+    } else if (res.data.code == 401) {
+        message.warning('登陆过期，请重新登陆');
+        newUserStore.clearUserInfo();
     } else {
         message.warning(res.data.msg);
     }

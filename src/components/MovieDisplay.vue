@@ -31,6 +31,9 @@ const handleSubmit = async () => {
     if (res.data.code == 200) {
         isEditing.value = false
         message.success('修改成功')
+    } else if (res.data.code == 401) {
+        message.warning('登陆过期，请重新登陆')
+        newUserStore.clearUserInfo()
     } else {
         message.error(res.data.msg || '修改失败')
     }
@@ -41,6 +44,9 @@ const handleDelete = async () => {
     if (res.data.code == 200) {
         message.success('删除成功')
         router.push('/')
+    } else if (res.data.code == 401) {
+        message.warning('登陆过期，请重新登陆')
+        newUserStore.clearUserInfo()
     } else {
         message.error(res.data.msg || '删除失败')
     }

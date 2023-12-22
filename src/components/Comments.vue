@@ -43,6 +43,9 @@ const handleSubmit = async () => {
         commentText.value = '';
         rate.value = 0;
         getCommentList();
+    } else if (res.data.code == 401) {
+        message.warning('登陆过期，请重新登陆');
+        newUserStore.clearUserInfo();
     } else {
         message.error(res.data.msg || '评论失败');
     }
@@ -81,6 +84,9 @@ const handleEdit = async () => {
         editVisible.value = false;
         message.success('编辑成功');
         getCommentList();
+    } else if (res.data.code == 401) {
+        message.warning('登陆过期，请重新登陆');
+        newUserStore.clearUserInfo();
     } else {
         message.error(res.data.msg || '编辑失败');
     }
@@ -98,6 +104,9 @@ const deleteComment = (item: commentListItem) => {
             if (res.data.code == 200) {
                 message.success('删除成功');
                 getCommentList();
+            } else if (res.data.code == 401) {
+                message.warning('登陆过期，请重新登陆');
+                newUserStore.clearUserInfo();
             } else {
                 message.error(res.data.msg || '删除失败');
             }
