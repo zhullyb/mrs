@@ -3,7 +3,7 @@ import { getCurrentInstance, onMounted, ref } from 'vue';
 import { movieInfo } from '../types/movie';
 import movieService from '../apis/movieService';
 import userStore from '../stores/userStore';
-import { message } from 'ant-design-vue';
+import { UploadChangeParam, UploadProps, message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
@@ -53,6 +53,33 @@ const handleDelete = async () => {
     }
 }
 
+const fileList = ref([]);
+const uploadUrl = import.meta.env.VITE_BASE_URL + '/api/v1/uploadImage';
+
+const beforeUpload: UploadProps['beforeUpload'] = (file) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+        message.error('只能上传 JPG/PNG 格式的图片');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+        message.error('图片大小不能超过 2MB');
+    }
+    return isJpgOrPng && isLt2M;
+}
+
+const handleChange = (info: UploadChangeParam) => {
+    if (info.file.status === 'uploading') {
+        return;
+    }
+    if (info.file.status === 'done') {
+        data.value.image = info.file.response.url
+    }
+    if (info.file.status === 'error') {
+        fileList.value = [];
+    }
+}
+
 onMounted(async () => {
     console.log(mid)
     const res = await movieService.getInfo(mid)
@@ -76,6 +103,20 @@ onMounted(async () => {
             <a-divider />
             <a-col :span="8" :offset="1" class="cover-image-container">
                 <img :src="data.image" class="cover-image"/>
+                <br />
+                <a-upload
+                    v-show="isEditing"
+                    v-model:file-list="fileList"
+                    :max-count="1"
+                    :action="uploadUrl"
+                    :showUploadList="false"
+                    :before-upload="beforeUpload"
+                    @change="handleChange"
+                >
+                    <a-button>
+                        上传封面
+                    </a-button>
+                </a-upload>
             </a-col>
             <a-col :span="14" :offset="1" style="color: #70757A;">
                 <div v-if="!isEditing">
@@ -185,6 +226,7 @@ onMounted(async () => {
 }
 .cover-image-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

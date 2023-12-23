@@ -7,7 +7,6 @@ import router from '../routers';
 import userStore from '../stores/userStore';
 const newUserStore = userStore();
 const isEditing = ref(true);
-const fileList = ref([]);
 const data = ref<movieInfo>({
     mid: '',
     name: '',
@@ -24,6 +23,8 @@ const data = ref<movieInfo>({
     description: ''
 })
 
+const fileList = ref([]);
+const uploadUrl = import.meta.env.VITE_BASE_URL + '/api/v1/uploadImage';
 const handleSubmit = async () => {
     const res = await movieService.addMovie(data.value)
     if (res.data.code == 200) {
@@ -55,7 +56,7 @@ const handleChange = (info: UploadChangeParam) => {
         return;
     }
     if (info.file.status === 'done') {
-        data.value.image = info.file.response.data.url
+        data.value.image = info.file.response.url
     }
     if (info.file.status === 'error') {
         fileList.value = [];
@@ -77,12 +78,11 @@ const handleChange = (info: UploadChangeParam) => {
             <a-col :span="8" :offset="1" class="cover-image-container">
                 <img :src="data.image" class="cover-image"/>
                 <br />
-                <!-- FIXME: change upload url here -->
                 <a-upload
                     v-show="isEditing"
                     v-model:file-list="fileList"
                     :max-count="1"
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    :action="uploadUrl"
                     :showUploadList="false"
                     :before-upload="beforeUpload"
                     @change="handleChange"
