@@ -23,7 +23,8 @@ const data = ref<movieInfo>({
     language: '',
     releaseDate: '',
     length: '',
-    description: ''
+    description: '',
+    rate: 0
 })
 
 const handleSubmit = async () => {
@@ -87,6 +88,7 @@ onMounted(async () => {
                     <p v-show="data.language"><span class="role">语言: </span>{{ data.language }}</p>
                     <p v-show="data.releaseDate"><span class="role">上映日期: </span>{{ data.releaseDate }}</p>
                     <p v-show="data.length"><span class="role">片长: </span>{{ data.length }}</p>
+                    <a-rate :value="(data.rate ?? 0) / 2" allow-half disabled />
                 </div>
                 <div v-else>
                     <a-form

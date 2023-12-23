@@ -12,6 +12,7 @@ export interface movieInfo {
     releaseDate?: string;
     length?: string;
     description: string;
+    rate?: number;
 }
 
 export interface movieListItem {
