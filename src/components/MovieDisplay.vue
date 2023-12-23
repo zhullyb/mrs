@@ -98,7 +98,7 @@ onMounted(async () => {
             <a-col :span="5" style="display: flex; justify-content: flex-end; align-items: center;">
                 <a-button v-show="isEditing && newUserStore.userSession.level == 1" type="primary" danger @click="handleDelete">删除</a-button>
                 <span>&nbsp;&nbsp;&nbsp;</span>
-                <a-button type="dashed" @click="isEditing=!isEditing">{{isEditing ? "预览" : "编辑"}}</a-button>
+                <a-button v-show="newUserStore.userSession.level == 1" type="dashed" @click="isEditing=!isEditing">{{isEditing ? "预览" : "编辑"}}</a-button>
             </a-col>
             <a-divider />
             <a-col :span="8" :offset="1" class="cover-image-container">
