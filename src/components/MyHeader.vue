@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import Login from '../components/Login.vue';
 import SearchBar from '../components/SearchBar.vue'
+import router from '../routers';
+import userStore from '../stores/userStore';
+const newUserStore = userStore();
+const toUserManage = () => {
+    router.push('/usermanage');
+}
 </script>
 
 <template>
@@ -11,6 +17,7 @@ import SearchBar from '../components/SearchBar.vue'
             </a>
             <div style="display: flex;">
                 <SearchBar style="margin: auto;"/>
+                <a-button v-show="newUserStore.userSession.level == 1" type="primary" style="margin: auto 0 auto 20px;" @click="toUserManage">用户管理</a-button>
                 <Login style="margin: auto;"/>
             </div>
         </div>
