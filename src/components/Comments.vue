@@ -17,7 +17,7 @@ const editCommentData = ref<editCommentItem>({
 });
 const editVisible = ref(false);
 const rate = ref(0);
-const mid = getCurrentInstance()?.proxy?.$route.params.mid as string;
+const mid = getCurrentInstance()?.proxy?.$route.params.id as string;
 const newUserStore = userStore();
 
 const email2avatar = (email: string) => {
