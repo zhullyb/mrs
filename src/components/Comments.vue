@@ -153,7 +153,7 @@ onMounted(async () => {
                             </a-tooltip>
                         </template>
                         <template #actions>
-                            <span v-show="newUserStore.userSession.uid === item.uid || newUserStore.userSession.level >= 1">
+                            <span v-show="newUserStore.userSession.uid == item.uid || newUserStore.userSession.level >= 1">
                                 <a @click="editComment(item)">编辑</a>
                                 <a-divider type="vertical" />
                                 <a @click="deleteComment(item)">删除</a>
