@@ -24,7 +24,7 @@ const data = ref<movieInfo>({
 })
 
 const fileList = ref([]);
-const uploadUrl = import.meta.env.VITE_BASE_URL + '/api/v1/uploadImage';
+const uploadUrl = '/api/v1/uploadImage';
 const handleSubmit = async () => {
     const res = await movieService.addMovie(data.value)
     if (res.data.code == 200) {

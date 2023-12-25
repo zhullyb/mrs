@@ -54,7 +54,7 @@ const handleDelete = async () => {
 }
 
 const fileList = ref([]);
-const uploadUrl = import.meta.env.VITE_BASE_URL + '/api/v1/uploadImage';
+const uploadUrl = '/api/v1/uploadImage';
 
 const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';

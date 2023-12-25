@@ -13,6 +13,11 @@ export default () => {
           target: process.env.VITE_BASE_URL,
           changeOrigin: true,
           secure: false,
+        },
+        '/uploads': {
+          target: process.env.VITE_BASE_URL,
+          changeOrigin: true,
+          secure: false,
         }
       }
     }
