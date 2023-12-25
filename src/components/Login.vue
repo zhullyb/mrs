@@ -127,7 +127,7 @@ const register = async () => {
       <a-form-item
         label="用户名"
         name="username"
-        :rules="[{ required: true, message: '请输入用户名', min: 3, max: 20 }]"
+        :rules="[{ required: true, message: '请输入用户名，长度为 3~20 位', min: 3, max: 20 }]"
       >
         <a-input v-model:value="serviceInfo.username" placeholder="用户名">
         </a-input>
@@ -144,7 +144,7 @@ const register = async () => {
       <a-form-item
         label="密码"
         name="password"
-        :rules="[{ required: true, message: '请输入密码', min: 6, max: 20 }]"
+        :rules="[{ required: true, message: '请输入密码，长度为 6~20 位', min: 6, max: 20 }]"
       >
         <a-input-password v-model:value="serviceInfo.password" placeholder="密码">
         </a-input-password>
@@ -152,7 +152,7 @@ const register = async () => {
       <a-form-item
         label="确认密码"
         name="passwordConfirm"
-        :rules="[{ required: true, message: '请确认密码', min: 6, max: 20 }]"
+        :rules="[{ required: true, message: '请确认密码，长度为 6~20 位', min: 6, max: 20 }]"
       >
         <a-input-password v-model:value="serviceInfo.passwordConfirm" placeholder="确认密码">
         </a-input-password>
