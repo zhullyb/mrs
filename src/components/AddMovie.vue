@@ -32,7 +32,7 @@ const handleSubmit = async () => {
         router.push(`/movie/${res.data.data.mid}`);
         message.success('添加成功')
     } else if (res.data.code == 401) {
-        message.warning('登陆过期，请重新登陆')
+        message.warning('登陆过期或未登陆，请重新登陆')
         newUserStore.clearUserInfo()
     } else {
         message.error(res.data.msg || '添加失败')

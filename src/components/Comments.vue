@@ -44,7 +44,7 @@ const handleSubmit = async () => {
         rate.value = 0;
         getCommentList();
     } else if (res.data.code == 401) {
-        message.warning('登陆过期，请重新登陆');
+        message.warning('登陆过期或未登陆，请重新登陆');
         newUserStore.clearUserInfo();
     } else {
         message.error(res.data.msg || '评论失败');
@@ -85,7 +85,7 @@ const handleEdit = async () => {
         message.success('编辑成功');
         getCommentList();
     } else if (res.data.code == 401) {
-        message.warning('登陆过期，请重新登陆');
+        message.warning('登陆过期或未登陆，请重新登陆');
         newUserStore.clearUserInfo();
     } else {
         message.error(res.data.msg || '编辑失败');
@@ -105,7 +105,7 @@ const deleteComment = (item: commentListItem) => {
                 message.success('删除成功');
                 getCommentList();
             } else if (res.data.code == 401) {
-                message.warning('登陆过期，请重新登陆');
+                message.warning('登陆过期或未登陆，请重新登陆');
                 newUserStore.clearUserInfo();
             } else {
                 message.error(res.data.msg || '删除失败');
