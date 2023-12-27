@@ -69,11 +69,16 @@ const register = async () => {
   }
 }
 
+const logout = () => {
+  newUserStore.clearUserInfo()
+  document.cookie = 'PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;'
+}
+
 </script>
 
 <template>
   <a-button v-show="!userLoggedIn()" type="primary" @click="dialogVisible = true" class="btn">登录/注册</a-button>
-  <a-button v-show="userLoggedIn()" type="primary" @click="newUserStore.clearUserInfo" class="btn">退出登录</a-button>
+  <a-button v-show="userLoggedIn()" type="primary" @click="logout" class="btn">退出登录</a-button>
   <a-modal
     v-model:open="dialogVisible"
     centered
