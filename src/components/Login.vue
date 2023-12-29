@@ -78,7 +78,12 @@ const logout = () => {
 
 <template>
   <a-button v-show="!userLoggedIn()" type="primary" @click="dialogVisible = true" class="btn">登录/注册</a-button>
-  <a-button v-show="userLoggedIn()" type="primary" @click="logout" class="btn">退出登录</a-button>
+  <a-popover v-show="userLoggedIn()">
+    <template #content>
+      <a-button type="primary" @click="logout">登出</a-button>
+    </template>
+    <span class="info-hint" v-show="userLoggedIn()">欢迎您，{{ newUserStore.userSession.username }}！</span>
+  </a-popover>
   <a-modal
     v-model:open="dialogVisible"
     centered
@@ -191,5 +196,10 @@ const logout = () => {
 
 .btn {
   margin: auto 20px;
+}
+
+.info-hint {
+  margin: auto 20px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 </style>

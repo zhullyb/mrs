@@ -17,8 +17,8 @@ const toUserManage = () => {
             </a>
             <div style="display: flex;">
                 <SearchBar style="margin: auto;"/>
-                <a-button v-show="newUserStore.userSession.level == 1" type="primary" style="margin: auto 0 auto 20px;" @click="toUserManage">用户管理</a-button>
                 <Login style="margin: auto;"/>
+                <a-button v-show="newUserStore.userSession.level == 1" type="primary" style="margin: auto 0;" @click="toUserManage">用户管理</a-button>
             </div>
         </div>
     </div>
